@@ -220,40 +220,28 @@ public class Program
         {
             return;
         }
-        int[,] B1 = new int[B.GetLength(0) - 1, B.GetLength(1)];
-        int[,] C1 = new int[C.GetLength(0) - 1, C.GetLength(1)];
-        int imaxB1 = FindDiagonalMaxIndex(B);
-        int imaxC1 = FindDiagonalMaxIndex(C);
-        for (int i = 0; i < imaxB1; i++)
+        void Del(ref int[,] matrix)
         {
-            for (int j = 0; j < B1.GetLength(1); j++)
+            int imax = FindDiagonalMaxIndex(matrix);
+            int[,] newmatrix = new int[matrix.GetLength(0) - 1, matrix.GetLength(1)];
+            for (int i = 0; i < imax; i++)
             {
-                B1[i, j] = B[i, j];
+                for (int j = 0; j < newmatrix.GetLength(1); j++)
+                {
+                    newmatrix[i, j] = matrix[i, j];
+                }
             }
-        }
-        for (int i = imaxB1; i < B1.GetLength(0); i++)
-        {
-            for (int j = 0; j < B1.GetLength(1); j++)
+            for (int i = imax; i < newmatrix.GetLength(0); i++)
             {
-                B1[i, j] = B[i + 1, j];
+                for (int j = 0; j < newmatrix.GetLength(1); j++)
+                {
+                    newmatrix[i, j] = matrix[i + 1, j];
+                }
             }
+            matrix = newmatrix;
         }
-        for (int i = 0; i < imaxC1; i++)
-        {
-            for (int j = 0; j < C1.GetLength(1); j++)
-            {
-                C1[i, j] = C[i, j];
-            }
-        }
-        for (int i = imaxC1; i < C1.GetLength(0); i++)
-        {
-            for (int j = 0; j < C1.GetLength(1); j++)
-            {
-                C1[i, j] = C[i + 1, j];
-            }
-        }
-        B = B1;
-        C = C1;
+        Del(ref B);
+        Del(ref C);
         // end
     }
 
